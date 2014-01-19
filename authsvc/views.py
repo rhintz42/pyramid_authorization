@@ -29,28 +29,19 @@ def login(request):
     from pyramid.httpexceptions import HTTPFound
     from pyramid.url import route_url
     return HTTPFound(location=route_url('user', request), headers=headers)
-    #import pdb;pdb.set_trace()
-    #return  {
-    #            'status': 0,
-    #            'data': {'content': 'You are Now Logged In'}
-    #        }
 
 @view_config(route_name='logout', renderer='json')
 def logout(request):
     headers = forget(request)
-    a = authenticated_userid(request)
-    import pdb;pdb.set_trace()
-    
-    return  {
-                'status': 0,
-                'data': {'content': 'You are Now Logged Out'}
-            }
+    from pyramid.httpexceptions import HTTPFound
+    from pyramid.url import route_url
+    return HTTPFound(location=route_url('user', request), headers=headers)
 
 @view_config(route_name='user', renderer='json')
 def user(request):
     a = authenticated_userid(request)
-    import pdb;pdb.set_trace()
+
     return  {
                 'status': 0,
-                'data': {'content': 'This User is Signed In: '}
+                'data': {'content': 'This User is Signed In: %s' % a}
             }
